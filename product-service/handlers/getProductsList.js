@@ -6,7 +6,10 @@ module.exports = async () => {
       statusCode: 200,
       body: JSON.stringify(products),
       headers: {
-        "Access-Control-Allow-Headers": "https://d1cw0fkrv9p4ak.cloudfront.net/"
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "GET, OPTIONS"
       }
     }
   } catch (e) {
