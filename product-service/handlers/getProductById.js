@@ -3,7 +3,7 @@ import { headers } from "../constants/common-headers";
 
 const getProductById =  async (event) => {
   try {
-    const productId = Number(event?.pathParameters?.productId);
+    const productId = Number(event.pathParameters.productId);
     const foundProduct = products.find(product => product.id === productId);
     if (foundProduct) {
       return {

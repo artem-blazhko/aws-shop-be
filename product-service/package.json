@@ -15,8 +15,6 @@
   "homepage": "https://github.com/artem-blazhko/aws-shop-be#readme",
   "exports": "./handler.js",
   "scripts": {
-    "build": "webpack",
-    "deploy": "npm run build && sls deploy",
     "test": "jest",
     "coverage": "jest --coverage"
   },
@@ -26,8 +24,7 @@
     "@babel/preset-env": "^7.12.1",
     "babel-jest": "^26.6.1",
     "jest": "^26.6.1",
-    "raw-loader": "^4.0.2",
-    "serverless-dotenv-plugin": "^3.1.0",
+    "serverless-webpack": "^5.4.1",
     "webpack": "^5.3.2",
     "webpack-cli": "^4.1.0"
   }
