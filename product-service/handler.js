@@ -1,8 +1,5 @@
 'use strict';
-const getProductsList = require("./handlers/getProductsList");
-const getProductsById = require("./handlers/getProductsById");
+import getProductsList from "./handlers/getProductsList";
+import getProductsById from "./handlers/getProductById";
 
-module.exports = {
-  getProductsById,
-  getProductsList
-};
+export { getProductsById, getProductsList };

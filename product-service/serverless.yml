@@ -28,6 +28,10 @@ provider:
   stage: dev
   region: eu-west-1
 
+package:
+  patterns:
+    - 'dist/handler.js'
+
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
 #    - Effect: "Allow"
@@ -59,13 +63,13 @@ provider:
 
 functions:
   getProductsList:
-    handler: handler.getProductsList
+    handler: dist/handler.getProductsList
     events:
       - http:
           path: products
           method: get
   getProductsById:
-    handler: handler.getProductsById
+    handler: dist/handler.getProductsById
     events:
       - http:
           path: products/{productId}

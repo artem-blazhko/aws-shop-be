@@ -1,22 +1,20 @@
-const products = require("../products/index");
+import products from "../products";
+import { headers } from "../constants/common-headers";
 
-module.exports = async () => {
+const getProductsList = async () => {
   try {
     return {
       statusCode: 200,
       body: JSON.stringify(products),
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET, OPTIONS"
-      }
+      headers
     }
   } catch (e) {
     console.log(e);//to see errors in CloudWatch
     return {
       statusCode: 500,
-      body: `Error: ${e}`
+      body: e.message
     }
   }
 };
+
+export default getProductsList;
