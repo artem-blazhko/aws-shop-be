@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: "production",
@@ -12,13 +13,20 @@ module.exports = {
     rules: [
       {
         test: /\\.js$/,
-        use: { loader: 'babel-loader' },
+        use: { loader: 'babel-loader' }
+      },
+      {
+        test: /\.sql$/i,
+        use: { loader: 'raw-loader' },
       }
     ]
   },
   resolve: {
     extensions: ['.js', '.json']
   },
+  plugins: [
+    new webpack.IgnorePlugin({ resourceRegExp: /^pg-native$/ })
+  ],
   performance: {
     hints: 'warning',
     maxAssetSize: 200000,
