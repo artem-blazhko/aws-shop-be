@@ -1,0 +1,31 @@
+{
+  "name": "product-service",
+  "version": "1.0.0",
+  "description": "Service to get products",
+  "main": "handler.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artem-blazhko/aws-shop-be.git"
+  },
+  "author": "Artem Blazhko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artem-blazhko/aws-shop-be/issues"
+  },
+  "homepage": "https://github.com/artem-blazhko/aws-shop-be#readme",
+  "exports": "./handler.js",
+  "scripts": {
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-throw-expressions": "^7.12.13",
+    "@babel/preset-env": "^7.12.1",
+    "babel-jest": "^26.6.1",
+    "jest": "^26.6.1",
+    "serverless-webpack": "^5.4.1",
+    "webpack": "^5.3.2",
+    "webpack-cli": "^4.1.0"
+  }
+}
