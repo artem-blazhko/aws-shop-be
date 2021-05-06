@@ -12,7 +12,6 @@ module.exports = async event => {
         Bucket: BUCKET,
         Key: record.s3.object.key,
       };
-
       const s3Stream = s3.getObject(params).createReadStream();
       s3Stream.pipe(csv()).on("data", data => results.push(data));
 
@@ -25,13 +24,8 @@ module.exports = async event => {
       return new Promise((resolve, reject) => {
         s3.upload(parsedParams, async (err, data) => {
           console.log("Results: ", results);
-
           s3Stream.destroy();
-
-          if (err) {
-            return reject(err);
-          }
-
+          if (err) { return reject(err); }
           return resolve(data);
         });
       }).then(() => {
@@ -44,13 +38,11 @@ module.exports = async event => {
       });
     }));
 
-    return {
-      statusCode: 202,
-    }
-  } catch (e) {
+    return { statusCode: 202 }
+  } catch (error) {
     return {
       statusCode: 500,
-      error: e,
+      error
     };
   }
 };

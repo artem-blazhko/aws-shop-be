@@ -21,12 +21,7 @@ module.exports = async event => {
       ContentType: 'text/csv',
       ACL: "public-read"
     };
-    const uploadURL = await new Promise((resolve, reject) => {
-      s3.getSignedUrl('putObject', params, (err, url) => {
-        if (err) { reject(err) }
-        resolve(url)
-      })
-    });
+    const uploadURL = await s3.getSignedUrlPromise("putObject", params);
 
     return {
       statusCode: 200,
