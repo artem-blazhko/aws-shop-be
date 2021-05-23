@@ -36,7 +36,12 @@ custom:
 #            - "/*"
 
 # you can define service wide environment variables here
-  
+  environment:
+    PG_HOST: shop-database.cnmsbdj8de61.eu-west-1.rds.amazonaws.com
+    PG_PORT: 5432
+    PG_DATABASE: shop_database
+    PG_USERNAME: master
+    PG_PASSWORD: 2GZU4OYVFEUVs2zaHXJF
 
 functions:
   getProductsList:

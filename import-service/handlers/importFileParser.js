@@ -5,6 +5,8 @@ const { BUCKET } = require("../constants");
 module.exports = async event => {
   try {
     const s3 = new AWS.S3({ region: "eu-west-1" });
+    const sqs = new AWS.SQS();
+
     await Promise.all(event.Records.map(record => {
       const results = [];
       console.log("Record key: ", record.s3.object.key);
@@ -24,6 +26,21 @@ module.exports = async event => {
       return new Promise((resolve, reject) => {
         s3.upload(parsedParams, async (err, data) => {
           console.log("Results: ", results);
+          await Promise.all(results.map(async product => {
+            try {
+              const param = {
+                MessageBody: JSON.stringify(product),
+                QueueUrl: process.env.SQS_URL,
+              };
+
+              console.log('SEND MESSAGE TO QUEUE', param);
+              await sqs.sendMessage(param).promise();
+              console.log('SUCCESSFULLY SENT');
+            } catch (e) {
+              console.log('FAILURE SENT', e);
+            }
+          }));
+
           s3Stream.destroy();
           if (err) { return reject(err); }
           return resolve(data);
