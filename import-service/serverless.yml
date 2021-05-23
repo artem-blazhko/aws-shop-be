@@ -18,6 +18,42 @@ provider:
       Action: "s3:*"
       Resource:
         - "arn:aws:s3:::import-service-s3-aws/*"
+    - Effect: "Allow"
+      Action: "sns:*"
+      Resource:
+      Ref: SNSTopic
+
+resources:
+  Resources:
+    CatalogItemsQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: product-queue
+    SNSTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: NEW_PRODUCT_NOTIFIER
+    SNSSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: artem_blazhko@epam.com
+        Protocol: email
+        TopicArn:
+          Ref: SNSTopic
+        FilterPolicy:
+          status:
+            - success
+  Outputs:
+    CatalogItemsQueueUrl:
+      Value:
+        Ref: CatalogItemsQueue
+      Export:
+        Name: CatalogItemsQueueUrl
+    CatalogItemsQueueArn:
+      Value:
+        Fn::GetAtt: [CatalogItemsQueue, Arn]
+      Export:
+        Name: CatalogItemsQueueArn
 
 functions:
   import-product-file:
@@ -41,3 +77,14 @@ functions:
           rules:
             - prefix: uploaded/
           existing: true
+
+  catalog-batch-process:
+    handler: handler.catalogBatchProcess
+    events:
+      - sqs:
+        batchSize: 5
+        arn:
+          Fn::GetAtt:
+            - CatalogItemsQueue
+            - Arn
+
